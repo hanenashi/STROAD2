@@ -11,10 +11,18 @@ import queue
 import uuid
 import json
 
+
+# -------------------------------
+# App identity (single source of truth)
+# -------------------------------
+APP_NAME = "STROAD"
+APP_VERSION = "2.0.0"
+APP_TITLE = f"{APP_NAME} {APP_VERSION}"
+
 class StroadGold:
     def __init__(self, root):
         self.root = root
-        self.root.title("STROAD 2.0 Gold")
+        self.root.title(APP_TITLE)
         self.root.geometry("680x760")
 
         # ---- Unified gray theme colors ----
