@@ -2,7 +2,7 @@ import json
 import threading
 from pathlib import Path
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Dict, Any
 
 
 def _atomic_write_json(path: Path, obj: dict) -> None:
@@ -90,11 +90,21 @@ class SessionManifest:
             )
             _atomic_write_json(self.path, self.data)
 
-    def error(self, message: str, exit_code: Optional[int] = None) -> None:
+    def error(
+        self,
+        message: str,
+        exit_code: Optional[int] = None,
+        details: Optional[Dict[str, Any]] = None,
+    ) -> None:
         with self._lock:
-            self.data["errors"].append(
-                {"t": self._now_local(), "message": message, "exit_code": exit_code}
-            )
+            item: Dict[str, Any] = {
+                "t": self._now_local(),
+                "message": message,
+                "exit_code": exit_code,
+            }
+            if details:
+                item["details"] = details
+            self.data["errors"].append(item)
             _atomic_write_json(self.path, self.data)
 
     def finalize(self, status: str) -> None:

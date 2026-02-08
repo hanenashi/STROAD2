@@ -6,6 +6,7 @@ DEFAULTS = {
 
     "ffmpeg_path": "",
     "ffprobe_path": "",
+    "ffplay_path": "",  # <--- NEW: Added for playback
 
     "selected_preset": "Jazz24 (128k MP3)",
     "custom_url": "",
